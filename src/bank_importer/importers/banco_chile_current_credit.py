@@ -26,7 +26,7 @@ class BancoChileCurrentCreditImporter(Importer):
 
     def parse(self, file_path: Path) -> Sequence[Transaction]:
         """Parse transactions from Banco de Chile XLS file."""
-        workbook = xlrd.open_workbook(file_path)
+        workbook = xlrd.open_workbook(str(file_path))
         sheet = workbook.sheet_by_index(0)
 
         self._verify_structure(sheet)
@@ -51,7 +51,7 @@ class BancoChileCurrentCreditImporter(Importer):
                 Transaction(
                     date=parsed_date,
                     description=description,
-                    amount=amount,
+                    amount=amount * -1,
                 )
             )
 
